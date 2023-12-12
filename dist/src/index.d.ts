@@ -1,0 +1,14 @@
+declare const execSync: any, spawnSync: any;
+declare const os: any;
+declare const userInfo: any;
+declare const uid: any;
+declare const checkCommandExists: (cmd: any) => boolean;
+declare const runCommand: (cmd: any, args: any) => void;
+declare const hasAPT: boolean;
+declare const hasDNF: boolean;
+declare const hasYUM: boolean;
+declare const hasPACMAN: boolean;
+declare const hasYAOURT: boolean;
+declare const hasFLATPAK: boolean;
+declare const hasSNAP: boolean;
+declare const hasZYPPER: boolean;
