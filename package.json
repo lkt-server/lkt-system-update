@@ -1,13 +1,17 @@
 {
   "name": "lkt-system-update",
   "version": "1.0.0",
-  "description": "",
+  "description": "One command line, everything up to date",
   "main": "src/index.ts",
   "module": "src/index.ts",
-  "private": true,
   "files": [
-    "dist/*"
+    "dist/*",
+    "bin/*"
   ],
+  "bin": {
+    "lkt-system-update": "./bin/bin.js"
+  },
+  "preferGlobal": true,
   "sideEffects": false,
   "exports": {
     ".": {
@@ -17,9 +21,18 @@
     "./dist/style.css": "./dist/style.css"
   },
   "types": "./dist/types/index.d.ts",
+  "keywords": [
+    "terminal",
+    "command line interface",
+    "cli",
+    "system update",
+    "command",
+    "lkt",
+    "linux"
+  ],
   "scripts": {
     "serve": "vite",
-    "build": "vite build && vue-tsc --emitDeclarationOnly --project tsconfig.json && mv dist/src dist/types && rm dist/README.md.d.ts && rm dist/vite.config.d.ts",
+    "build": "vite build && vue-tsc --emitDeclarationOnly --project tsconfig.json && mv dist/src dist/types && rm dist/README.md.d.ts && rm dist/vite.config.d.ts && rm -rf dist/bin",
     "build2": "vite build",
     "preview": "vite preview",
     "test": "vitest",
@@ -54,7 +67,12 @@
     "vite": "^3.1.2",
     "vue-tsc": "^0.38.9"
   },
-  "dependencies": {},
+  "dependencies": {
+    "colors": "^1.4.0",
+    "commander": "^11.1.0",
+    "figlet": "^1.7.0",
+    "vite-node": "^1.0.4"
+  },
   "engines": {
     "node": ">=18"
   }

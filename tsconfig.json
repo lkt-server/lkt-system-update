@@ -2,11 +2,13 @@
   "compilerOptions": {
     "outDir": "./dist/",
     "noImplicitAny": true,
-    "module": "es6",
+    "allowSyntheticDefaultImports": true,
+    "module": "commonjs",
     "target": "es6",
     "jsx": "preserve",
     "allowJs": true,
     "composite": false,
+    "esModuleInterop": false,
     "declaration": true,
     "moduleResolution": "node"
   }
