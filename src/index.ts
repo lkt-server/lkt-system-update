@@ -117,7 +117,7 @@ const doSystemUpdate = () => {
     console.log('');
 
     if (!requiredSudo) { // sudoer
-        console.log('[!]'.red + ' Running as root/sudo user'.underline.yellow);
+        console.log('[!]'.red + ' Running as root/sudo user'.yellow);
         console.log('');
     } else {
         console.log('[!]'.red + ' Running as regular user'.yellow);
