@@ -27,11 +27,11 @@ If required (not root), password will request.
 
 ### APT sample
 
-![running-1.png](doc%2Fimg%2Frunning-1.png)
+![running-1.png](doc/img/running-1.png)
 
 And will be noticed when finished:
 
-![running-2.png](doc%2Fimg%2Frunning-2.png)
+![running-2.png](doc/img/running-2.png)
 
 ### Update order
 
