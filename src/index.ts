@@ -1,8 +1,8 @@
-const {execSync, spawnSync} = require('child_process');
-const os = require('os');
-const colors = require('colors');
-const { Command } = require('commander');
-const figlet = require("figlet");
+import {execSync, spawnSync} from 'child_process';
+import os from 'os';
+import colors from 'colors';
+import figlet from "figlet";
+import {program} from "./config/program-config";
 
 class OsCommand {
     cmd: string;
@@ -12,71 +12,59 @@ class OsCommand {
         this.cmd = cmd;
         this.opts = opts;
     }
-}
 
-const getOsCommand = (command: string, opts: string[], requiresSudo: boolean, isInteractive: boolean) => {
-    let cmd = requiresSudo ? 'sudo' : command;
-    if (requiresSudo) opts = [command].concat(opts);
-    return new OsCommand(cmd, opts);
+    static getCommand(command: string, opts: string[], requiresSudo: boolean) {
+        let cmd = requiresSudo ? 'sudo' : command;
+        if (requiresSudo) opts = [command].concat(opts);
+        return new OsCommand(cmd, opts);
+    }
+
+    static existsInOs(cmd: string) {
+        try {
+            const output = execSync('command -v ' + cmd);
+            return output.toString() !== '';
+        } catch (error) {
+            return false;
+        }
+    }
+
+    static run (command: OsCommand) {
+        spawnSync(command.cmd, command.opts, {stdio: 'inherit'}); // will print as it's processing
+    }
 }
 
 const getAptCommand = (command: string, requiresSudo: boolean, isInteractive: boolean) => {
     let opts = isInteractive ? [command] : [command, '-y'];
-    return getOsCommand('apt', opts, requiresSudo, isInteractive);
+    return OsCommand.getCommand('apt', opts, requiresSudo);
 }
 
 const getDnfCommand = (command: string, requiresSudo: boolean, isInteractive: boolean) => {
     let opts = isInteractive ? [command] : [command, '-y'];
-    return getOsCommand('dnf', opts, requiresSudo, isInteractive);
+    return OsCommand.getCommand('dnf', opts, requiresSudo);
 }
 
 const getYumCommand = (command: string, requiresSudo: boolean, isInteractive: boolean) => {
     let opts = isInteractive ? [command] : [command, '-y'];
-    return getOsCommand('yum', opts, requiresSudo, isInteractive);
+    return OsCommand.getCommand('yum', opts, requiresSudo);
 }
 
 const getPacmanCommand = (command: string, requiresSudo: boolean, isInteractive: boolean) => {
     let opts = isInteractive ? [command] : [command, '--noconfirm'];
-    return getOsCommand('pacman', opts, requiresSudo, isInteractive);
+    return OsCommand.getCommand('pacman', opts, requiresSudo);
 }
 
 const getYaourtCommand = (command: string, requiresSudo: boolean, isInteractive: boolean) => {
     let opts = isInteractive ? [command] : [command, '--noconfirm'];
-    return getOsCommand('yaourt', opts, requiresSudo, isInteractive);
+    return OsCommand.getCommand('yaourt', opts, requiresSudo);
 }
 
 const getZypperCommand = (command: string, requiresSudo: boolean, isInteractive: boolean) => {
     let opts = isInteractive ? [command] : ['--non-interactive', command];
-    return getOsCommand('zypper', opts, requiresSudo, isInteractive);
-}
-
-const checkCommandExists = (cmd: string) => {
-    try {
-        const output = execSync('command -v ' + cmd);
-        return output.toString() !== '';
-    } catch (error) {
-        return false;
-    }
-}
-
-const runCommand = (cmd: string, args: string[]) => {
-    spawnSync(cmd, args, { stdio: 'inherit'}); // will print as it's processing
+    return OsCommand.getCommand('zypper', opts, requiresSudo);
 }
 
 // CLI options
-const program = new Command();
-
-program
-    .name('LKT System Update')
-    .description('CLI to update Linux distros')
-    .version('1.0.0');
-
-program.option('-ns, --nosnap', 'prevent snap packages update');
-program.option('-i, --interactive', 'enables interaction');
-program.parse();
-
-const options = program.opts(),
-    limit = options.first ? 1 : undefined;
+const options = program.opts();
 
 const doSystemUpdate = () => {
 
@@ -95,14 +83,14 @@ const doSystemUpdate = () => {
 
     const requiredSudo = uid !== 0;
 
-    const hasAPT = checkCommandExists('apt-get');
-    const hasDNF = checkCommandExists('dnf');
-    const hasYUM = checkCommandExists('yum');
-    const hasPACMAN = checkCommandExists('pacman');
-    const hasYAOURT = checkCommandExists('yaourt');
-    const hasFLATPAK = checkCommandExists('flatpak');
-    const hasSNAP = checkCommandExists('snap');
-    const hasZYPPER = checkCommandExists('zypper');
+    const hasAPT = OsCommand.existsInOs('apt-get'),
+        hasDNF = OsCommand.existsInOs('dnf'),
+        hasYUM = OsCommand.existsInOs('yum'),
+        hasPACMAN = OsCommand.existsInOs('pacman'),
+        hasYAOURT = OsCommand.existsInOs('yaourt'),
+        hasFLATPAK = OsCommand.existsInOs('flatpak'),
+        hasSNAP = OsCommand.existsInOs('snap'),
+        hasZYPPER = OsCommand.existsInOs('zypper');
 
     console.log('');
     console.log(
@@ -127,26 +115,25 @@ const doSystemUpdate = () => {
     let cmd = new OsCommand('', []);
 
     if (hasAPT) {
-
         console.log('Updating apt...'.blue);
         console.log('');
 
         cmd = getAptCommand('update', requiredSudo, interactive);
-        runCommand(cmd.cmd, cmd.opts)
+        OsCommand.run(cmd);
 
         cmd = getAptCommand('upgrade', requiredSudo, interactive);
-        runCommand(cmd.cmd, cmd.opts)
+        OsCommand.run(cmd);
 
         console.log('');
         console.log('Cleaning apt...'.blue);
         console.log('');
 
         cmd = getAptCommand('autoremove', requiredSudo, interactive);
-        runCommand(cmd.cmd, cmd.opts)
+        OsCommand.run(cmd);
         cmd = getAptCommand('clean', requiredSudo, interactive);
-        runCommand(cmd.cmd, cmd.opts)
+        OsCommand.run(cmd);
         cmd = getAptCommand('autoclean', requiredSudo, interactive);
-        runCommand(cmd.cmd, cmd.opts)
+        OsCommand.run(cmd);
         console.log('');
     }
 
@@ -155,7 +142,7 @@ const doSystemUpdate = () => {
         console.log('');
 
         cmd = getDnfCommand('update', requiredSudo, interactive);
-        runCommand(cmd.cmd, cmd.opts)
+        OsCommand.run(cmd);
         console.log('');
 
     } else if (hasYUM) {
@@ -163,7 +150,7 @@ const doSystemUpdate = () => {
         console.log('');
 
         cmd = getYumCommand('update', requiredSudo, interactive);
-        runCommand(cmd.cmd, cmd.opts)
+        OsCommand.run(cmd);
         console.log('');
     }
 
@@ -172,7 +159,7 @@ const doSystemUpdate = () => {
         console.log('');
 
         cmd = getPacmanCommand('-Syu', requiredSudo, interactive);
-        runCommand(cmd.cmd, cmd.opts)
+        OsCommand.run(cmd);
         console.log('');
     }
 
@@ -181,7 +168,7 @@ const doSystemUpdate = () => {
         console.log('');
 
         cmd = getYaourtCommand('-Syu', requiredSudo, interactive);
-        runCommand(cmd.cmd, cmd.opts)
+        OsCommand.run(cmd);
         console.log('');
     }
 
@@ -190,24 +177,24 @@ const doSystemUpdate = () => {
         console.log('');
 
         cmd = getZypperCommand('refresh', requiredSudo, interactive);
-        runCommand(cmd.cmd, cmd.opts)
+        OsCommand.run(cmd);
 
         cmd = getZypperCommand('up', requiredSudo, interactive);
-        runCommand(cmd.cmd, cmd.opts)
+        OsCommand.run(cmd);
         console.log('');
     }
 
     if (hasFLATPAK) {
         console.log('Updating flatpak...'.blue);
         console.log('');
-        runCommand('flatpak', ['update', '-y'])
+        OsCommand.run(OsCommand.getCommand('flatpak', ['update', '-y'], false));
         console.log('');
     }
 
     if (hasSNAP && !noSnap) {
         console.log('Updating snap...'.blue);
         console.log('');
-        runCommand('snap', ['refresh'])
+        OsCommand.run(OsCommand.getCommand('snap', ['refresh'], false));
         console.log('');
     }
 
@@ -215,4 +202,4 @@ const doSystemUpdate = () => {
     console.log('');
 }
 
-exports.doSystemUpdate = doSystemUpdate;
+export {doSystemUpdate}

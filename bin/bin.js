@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var lkt = require('../dist/lkt-system-update.umd');
+import {doSystemUpdate} from "../dist/index.js";
 
-// Displays the text in the console
-lkt.doSystemUpdate();
+// Run command (Displays the text in the console)
+doSystemUpdate();

@@ -51,7 +51,7 @@ Options:
 | -i, --interactive | enables interaction          |
 | -h, --help        | display help for command     |
 
-The `no snap` option exists in case you want to use this command in an scheluded script because snap API doesn't allow user to skip password autenthication.
+The `no snap` option exists in case you want to use this command in scheduled scripts because snap API doesn't allow user to skip password authentication.
 
 By default, this command updates the system without the need of user input, but you can be able to manually confirm the updates with the `interactive` option.
 
