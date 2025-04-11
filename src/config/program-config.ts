@@ -7,7 +7,8 @@ program
     .description('CLI to update Linux distros')
     .version('1.0.0');
 
-program.option('-ns, --nosnap', 'prevent snap packages update');
+program.option('--no-snap', 'prevent snap packages update');
+program.option('--no-npm', 'prevent npm packages update');
 program.option('-i, --interactive', 'enables interaction');
 program.parse();
 

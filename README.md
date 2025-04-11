@@ -47,7 +47,8 @@ Options:
 | Option            | Result                       |
 |-------------------|------------------------------|
 | -V, --version     | output the version number    |
-| -ns, --nosnap     | prevent snap packages update |
+| --no-snap         | prevent snap packages update |
+| --no-npm          | prevent npm packages update  |
 | -i, --interactive | enables interaction          |
 | -h, --help        | display help for command     |
 

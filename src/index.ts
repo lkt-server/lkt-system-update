@@ -69,7 +69,8 @@ const options = program.opts();
 const doSystemUpdate = () => {
 
     // Check CLI arguments
-    const noSnap = options.nosnap === true,
+    const noSnap = options.snap === false,
+        noNpm = options.npm === false,
         interactive = options.interactive === true;
 
     // Enable colors
@@ -192,7 +193,7 @@ const doSystemUpdate = () => {
         console.log('');
     }
 
-    if (hasNPM) {
+    if (hasNPM && !noNpm) {
         console.log('Updating NPM...'.blue);
         console.log('');
         OsCommand.run(OsCommand.getCommand('npm', ['update', '-g'], requiredSudo));
