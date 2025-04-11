@@ -7,7 +7,7 @@ One command line, everything up to date
 ## Features
 
 - Automatic detects if it's a normal user or root/sudo
-- Supports apt, dnf, yum, pacman, yaourt, zypper, flatpak and snap
+- Supports apt, dnf, yum, pacman, yaourt, zypper, flatpak, npm and snap
 
 ## Installation
 
