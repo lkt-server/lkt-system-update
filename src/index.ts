@@ -90,7 +90,8 @@ const doSystemUpdate = () => {
         hasYAOURT = OsCommand.existsInOs('yaourt'),
         hasFLATPAK = OsCommand.existsInOs('flatpak'),
         hasSNAP = OsCommand.existsInOs('snap'),
-        hasZYPPER = OsCommand.existsInOs('zypper');
+        hasZYPPER = OsCommand.existsInOs('zypper'),
+        hasNPM = OsCommand.existsInOs('npm');
 
     console.log('');
     console.log(
@@ -188,6 +189,13 @@ const doSystemUpdate = () => {
         console.log('Updating flatpak...'.blue);
         console.log('');
         OsCommand.run(OsCommand.getCommand('flatpak', ['update', '-y'], false));
+        console.log('');
+    }
+
+    if (hasNPM) {
+        console.log('Updating NPM...'.blue);
+        console.log('');
+        OsCommand.run(OsCommand.getCommand('npm', ['update', '-g'], requiredSudo));
         console.log('');
     }
 
