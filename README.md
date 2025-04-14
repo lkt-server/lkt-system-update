@@ -7,7 +7,14 @@ One command line, everything up to date
 ## Features
 
 - Automatic detects if it's a normal user or root/sudo
-- Supports apt, dnf, yum, pacman, yaourt, zypper, flatpak, npm and snap
+- Supported package managers:
+  - APT (Debian, Ubuntu, LinuxMint, ...)
+  - DNF/Yum (RHEL, Fedora, ..)
+  - Pacman & Yaourt (ArchLinux, Manjaro, ...)
+  - Zypper (SUSE & openSUSE)
+  - Flatpak
+  - NPM (Node Package Manager)
+  - SNAP
 
 ## Installation
 
@@ -45,13 +52,13 @@ And will be noticed when finished:
 
 Options:
 
-| Option            | Result                       |
-|-------------------|------------------------------|
-| -V, --version     | output the version number    |
-| --no-snap         | prevent snap packages update |
-| --no-npm          | prevent npm packages update  |
-| -i, --interactive | enables interaction          |
-| -h, --help        | display help for command     |
+| Option                | Result                       |
+|-----------------------|------------------------------|
+| `-V`, `--version`     | output the version number    |
+| `--no-snap`           | prevent snap packages update |
+| `--no-npm`            | prevent npm packages update  |
+| `-i`, `--interactive` | enables interaction          |
+| `-h`, `--help`        | display help for command     |
 
 The `no snap` option exists in case you want to use this command in scheduled scripts because snap API doesn't allow user to skip password authentication.
 
