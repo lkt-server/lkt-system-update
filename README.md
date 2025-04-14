@@ -42,7 +42,7 @@ And will be noticed when finished:
 
 ### Update order
 
-1. OS package engine: apt, yum, pacman...
+1. OS package engine: apt, dnf, pacman...
 2. OS package cleaning (apt only)
 3. flatpak (only if installed)
 4. npm (only if installed)
@@ -79,4 +79,6 @@ lkt-system-update --no-snap
 # Common user usage (without NPM)
 lkt-system-update --no-npm
 ```
+### A note about DNF and Yum
 
+Since DNF is a modern version of Yum, both are mutually exclusive. Yum is preserved as a fallback for older OS.
