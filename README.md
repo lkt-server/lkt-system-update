@@ -27,18 +27,19 @@ If required (not root), password will request.
 
 ### APT sample
 
-![running-1.png](doc/img/running-1.png)
+![running-1.png](https://raw.githubusercontent.com/lkt-server/lkt-system-update/main/doc/img/running-1.png)
 
 And will be noticed when finished:
 
-![running-2.png](doc/img/running-2.png)
+![running-2.png](https://raw.githubusercontent.com/lkt-server/lkt-system-update/main/doc/img/running-2.png)
 
 ### Update order
 
 1. OS package engine: apt, yum, pacman...
 2. OS package cleaning (apt only)
 3. flatpak (only if installed)
-4. snap (only if installed)
+4. npm (only if installed)
+5. snap (only if installed)
 
 ### CLI options
 
@@ -65,7 +66,10 @@ lkt-system-update
 # Common user usage, but wants to confirm updates
 lkt-system-update -i
  
-# Run in an scheluded cronjob
-lkt-system-update -ns
+# Run in an scheduled cronjob
+lkt-system-update --no-snap
+
+# Common user usage (without NPM)
+lkt-system-update --no-npm
 ```
 
