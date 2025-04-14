@@ -6,7 +6,7 @@ One command line, everything up to date
 
 ## Features
 
-- Automatic detects if it's a normal user or root/sudo
+- Automatic detects if it's a regular user or root/sudo
 - Supported package managers:
   - APT (Debian, Ubuntu, LinuxMint, ...)
   - DNF/Yum (RHEL, Fedora, ..)
