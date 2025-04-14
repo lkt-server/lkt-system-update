@@ -54,10 +54,10 @@ Options:
 
 | Option                | Result                       |
 |-----------------------|------------------------------|
-| `-V`, `--version`     | output the version number    |
 | `--no-snap`           | prevent snap packages update |
 | `--no-npm`            | prevent npm packages update  |
 | `-i`, `--interactive` | enables interaction          |
+| `-V`, `--version`     | output the version number    |
 | `-h`, `--help`        | display help for command     |
 
 The `no snap` option exists in case you want to use this command in scheduled scripts because snap API doesn't allow user to skip password authentication.
