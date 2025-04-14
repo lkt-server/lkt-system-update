@@ -1,37 +1,8 @@
-import {execSync, spawnSync} from 'child_process';
 import os from 'os';
 import colors from 'colors';
 import figlet from "figlet";
 import {program} from "./config/program-config";
-
-class OsCommand {
-    cmd: string;
-    opts: string[];
-
-    constructor(cmd: string, opts: string[]) {
-        this.cmd = cmd;
-        this.opts = opts;
-    }
-
-    static getCommand(command: string, opts: string[], requiresSudo: boolean) {
-        let cmd = requiresSudo ? 'sudo' : command;
-        if (requiresSudo) opts = [command].concat(opts);
-        return new OsCommand(cmd, opts);
-    }
-
-    static existsInOs(cmd: string) {
-        try {
-            const output = execSync('command -v ' + cmd);
-            return output.toString() !== '';
-        } catch (error) {
-            return false;
-        }
-    }
-
-    static run (command: OsCommand) {
-        spawnSync(command.cmd, command.opts, {stdio: 'inherit'}); // will print as it's processing
-    }
-}
+import {OsCommand} from "lkt-server-kernel";
 
 const getAptCommand = (command: string, requiresSudo: boolean, isInteractive: boolean) => {
     let opts = isInteractive ? [command] : [command, '-y'];
