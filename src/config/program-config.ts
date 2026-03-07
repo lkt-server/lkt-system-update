@@ -5,7 +5,7 @@ const program = new Command();
 program
     .name('LKT System Update')
     .description('CLI to update Linux distros')
-    .version('1.0.0');
+    .version('1.0.2');
 
 program.option('--no-snap', 'prevent snap packages update');
 program.option('--no-npm', 'prevent npm packages update');
