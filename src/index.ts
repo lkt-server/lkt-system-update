@@ -24,6 +24,11 @@ const getPacmanCommand = (command: string, requiresSudo: boolean, isInteractive:
     return OsCommand.getCommand('pacman', opts, requiresSudo);
 }
 
+const getPamacCommand = (command: string, requiresSudo: boolean, isInteractive: boolean) => {
+    let opts = isInteractive ? [command] : [command, '--noconfirm'];
+    return OsCommand.getCommand('pamac', opts, requiresSudo);
+}
+
 const getYaourtCommand = (command: string, requiresSudo: boolean, isInteractive: boolean) => {
     let opts = isInteractive ? [command] : [command, '--noconfirm'];
     return OsCommand.getCommand('yaourt', opts, requiresSudo);
@@ -59,6 +64,7 @@ const doSystemUpdate = () => {
         hasDNF = OsCommand.existsInOs('dnf'),
         hasYUM = OsCommand.existsInOs('yum'),
         hasPACMAN = OsCommand.existsInOs('pacman'),
+        hasPAMAC = OsCommand.existsInOs('pamac'),
         hasYAOURT = OsCommand.existsInOs('yaourt'),
         hasFLATPAK = OsCommand.existsInOs('flatpak'),
         hasSNAP = OsCommand.existsInOs('snap'),
@@ -132,6 +138,15 @@ const doSystemUpdate = () => {
         console.log('');
 
         cmd = getPacmanCommand('-Syu', requiredSudo, interactive);
+        OsCommand.run(cmd);
+        console.log('');
+    }
+
+    if (hasPAMAC) {
+        console.log('Updating pamac...'.blue);
+        console.log('');
+
+        cmd = getPamacCommand('update', requiredSudo, interactive);
         OsCommand.run(cmd);
         console.log('');
     }
