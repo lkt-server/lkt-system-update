@@ -25,7 +25,7 @@ const getPacmanCommand = (command: string, requiresSudo: boolean, isInteractive:
 }
 
 const getPamacCommand = (command: string, requiresSudo: boolean, isInteractive: boolean) => {
-    let opts = isInteractive ? [command] : [command, '--noconfirm'];
+    let opts = isInteractive ? [command] : [command, '--no-confirm'];
     return OsCommand.getCommand('pamac', opts, requiresSudo);
 }
 
